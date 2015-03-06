@@ -9,11 +9,24 @@
 /* Begin PBXBuildFile section */
 		EFE6731B1AA9382700010DAD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE6731A1AA9382700010DAD /* main.m */; };
 		EFE6731E1AA9382700010DAD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE6731D1AA9382700010DAD /* AppDelegate.m */; };
-		EFE673211AA9382700010DAD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE673201AA9382700010DAD /* ViewController.m */; };
+		EFE673211AA9382700010DAD /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = EFE673201AA9382700010DAD /* ViewController.mm */; };
 		EFE673241AA9382700010DAD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFE673221AA9382700010DAD /* Main.storyboard */; };
 		EFE673261AA9382700010DAD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFE673251AA9382700010DAD /* Images.xcassets */; };
 		EFE673291AA9382700010DAD /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = EFE673271AA9382700010DAD /* LaunchScreen.xib */; };
 		EFE673351AA9382700010DAD /* JSJAssignment4Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE673341AA9382700010DAD /* JSJAssignment4Tests.m */; };
+		EFE6733F1AA9386000010DAD /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE6733E1AA9386000010DAD /* CoreMedia.framework */; };
+		EFE673411AA9386B00010DAD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE673401AA9386B00010DAD /* QuartzCore.framework */; };
+		EFE673431AA9387500010DAD /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE673421AA9387500010DAD /* CoreVideo.framework */; };
+		EFE673451AA938DD00010DAD /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE673441AA938DD00010DAD /* CoreAudio.framework */; };
+		EFE673471AA938E400010DAD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE673461AA938E400010DAD /* CoreGraphics.framework */; };
+		EFE673491AA938F200010DAD /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE673481AA938F200010DAD /* AssetsLibrary.framework */; };
+		EFE6734B1AA938FB00010DAD /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE6734A1AA938FB00010DAD /* Accelerate.framework */; };
+		EFE6734D1AA9390300010DAD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE6734C1AA9390300010DAD /* AVFoundation.framework */; };
+		EFE6734F1AA9392600010DAD /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE6734E1AA9392600010DAD /* opencv2.framework */; };
+		EFE673511AA9395300010DAD /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE673501AA9395300010DAD /* CoreImage.framework */; };
+		EFE673541AA9399F00010DAD /* CvVideoCameraMod.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE673531AA9399F00010DAD /* CvVideoCameraMod.m */; };
+		EFE6735A1AA93D9B00010DAD /* FaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE673591AA93D9B00010DAD /* FaceViewController.swift */; };
+		EFE6735C1AA93DCE00010DAD /* VideoAnalgesic.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE6735B1AA93DCE00010DAD /* VideoAnalgesic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,13 +46,28 @@
 		EFE6731C1AA9382700010DAD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EFE6731D1AA9382700010DAD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		EFE6731F1AA9382700010DAD /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		EFE673201AA9382700010DAD /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		EFE673201AA9382700010DAD /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		EFE673231AA9382700010DAD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EFE673251AA9382700010DAD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		EFE673281AA9382700010DAD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		EFE6732E1AA9382700010DAD /* JSJAssignment4Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSJAssignment4Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFE673331AA9382700010DAD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFE673341AA9382700010DAD /* JSJAssignment4Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSJAssignment4Tests.m; sourceTree = "<group>"; };
+		EFE6733E1AA9386000010DAD /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		EFE673401AA9386B00010DAD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		EFE673421AA9387500010DAD /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		EFE673441AA938DD00010DAD /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		EFE673461AA938E400010DAD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		EFE673481AA938F200010DAD /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		EFE6734A1AA938FB00010DAD /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		EFE6734C1AA9390300010DAD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		EFE6734E1AA9392600010DAD /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../Downloads/opencv2.framework; sourceTree = "<group>"; };
+		EFE673501AA9395300010DAD /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		EFE673521AA9399A00010DAD /* CvVideoCameraMod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CvVideoCameraMod.h; sourceTree = "<group>"; };
+		EFE673531AA9399F00010DAD /* CvVideoCameraMod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CvVideoCameraMod.m; sourceTree = "<group>"; };
+		EFE673581AA93D9A00010DAD /* JSJAssignment4-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JSJAssignment4-Bridging-Header.h"; sourceTree = "<group>"; };
+		EFE673591AA93D9B00010DAD /* FaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceViewController.swift; sourceTree = "<group>"; };
+		EFE6735B1AA93DCE00010DAD /* VideoAnalgesic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoAnalgesic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +75,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFE673511AA9395300010DAD /* CoreImage.framework in Frameworks */,
+				EFE6734F1AA9392600010DAD /* opencv2.framework in Frameworks */,
+				EFE6734D1AA9390300010DAD /* AVFoundation.framework in Frameworks */,
+				EFE6734B1AA938FB00010DAD /* Accelerate.framework in Frameworks */,
+				EFE673491AA938F200010DAD /* AssetsLibrary.framework in Frameworks */,
+				EFE673471AA938E400010DAD /* CoreGraphics.framework in Frameworks */,
+				EFE673451AA938DD00010DAD /* CoreAudio.framework in Frameworks */,
+				EFE673431AA9387500010DAD /* CoreVideo.framework in Frameworks */,
+				EFE673411AA9386B00010DAD /* QuartzCore.framework in Frameworks */,
+				EFE6733F1AA9386000010DAD /* CoreMedia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +101,16 @@
 		EFE6730C1AA9382700010DAD = {
 			isa = PBXGroup;
 			children = (
+				EFE673501AA9395300010DAD /* CoreImage.framework */,
+				EFE6734E1AA9392600010DAD /* opencv2.framework */,
+				EFE6734C1AA9390300010DAD /* AVFoundation.framework */,
+				EFE6734A1AA938FB00010DAD /* Accelerate.framework */,
+				EFE673481AA938F200010DAD /* AssetsLibrary.framework */,
+				EFE673461AA938E400010DAD /* CoreGraphics.framework */,
+				EFE673441AA938DD00010DAD /* CoreAudio.framework */,
+				EFE673421AA9387500010DAD /* CoreVideo.framework */,
+				EFE673401AA9386B00010DAD /* QuartzCore.framework */,
+				EFE6733E1AA9386000010DAD /* CoreMedia.framework */,
 				EFE673171AA9382700010DAD /* JSJAssignment4 */,
 				EFE673311AA9382700010DAD /* JSJAssignment4Tests */,
 				EFE673161AA9382700010DAD /* Products */,
@@ -82,13 +130,17 @@
 			isa = PBXGroup;
 			children = (
 				EFE6731C1AA9382700010DAD /* AppDelegate.h */,
+				EFE673591AA93D9B00010DAD /* FaceViewController.swift */,
 				EFE6731D1AA9382700010DAD /* AppDelegate.m */,
 				EFE6731F1AA9382700010DAD /* ViewController.h */,
-				EFE673201AA9382700010DAD /* ViewController.m */,
+				EFE673201AA9382700010DAD /* ViewController.mm */,
+				EFE673531AA9399F00010DAD /* CvVideoCameraMod.m */,
+				EFE673521AA9399A00010DAD /* CvVideoCameraMod.h */,
 				EFE673221AA9382700010DAD /* Main.storyboard */,
 				EFE673251AA9382700010DAD /* Images.xcassets */,
 				EFE673271AA9382700010DAD /* LaunchScreen.xib */,
 				EFE673181AA9382700010DAD /* Supporting Files */,
+				EFE673581AA93D9A00010DAD /* JSJAssignment4-Bridging-Header.h */,
 			);
 			path = JSJAssignment4;
 			sourceTree = "<group>";
@@ -96,6 +148,7 @@
 		EFE673181AA9382700010DAD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EFE6735B1AA93DCE00010DAD /* VideoAnalgesic.swift */,
 				EFE673191AA9382700010DAD /* Info.plist */,
 				EFE6731A1AA9382700010DAD /* main.m */,
 			);
@@ -219,8 +272,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFE673211AA9382700010DAD /* ViewController.m in Sources */,
+				EFE673211AA9382700010DAD /* ViewController.mm in Sources */,
 				EFE6731E1AA9382700010DAD /* AppDelegate.m in Sources */,
+				EFE6735A1AA93D9B00010DAD /* FaceViewController.swift in Sources */,
+				EFE6735C1AA93DCE00010DAD /* VideoAnalgesic.swift in Sources */,
+				EFE673541AA9399F00010DAD /* CvVideoCameraMod.m in Sources */,
 				EFE6731B1AA9382700010DAD /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,9 +399,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/chc484-mac/Downloads",
+				);
 				INFOPLIST_FILE = JSJAssignment4/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "JSJAssignment4/JSJAssignment4-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -353,9 +416,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/chc484-mac/Downloads",
+				);
 				INFOPLIST_FILE = JSJAssignment4/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "JSJAssignment4/JSJAssignment4-Bridging-Header.h";
 			};
 			name = Release;
 		};
