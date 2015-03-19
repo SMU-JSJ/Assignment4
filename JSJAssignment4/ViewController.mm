@@ -29,6 +29,8 @@ using namespace cv;
 @property (strong, nonatomic) NSMutableArray *averageGreen;
 @property (strong, nonatomic) NSMutableArray *averageBlue;
 
+@property (nonatomic) int count;
+
 @end
 
 @implementation ViewController
@@ -127,20 +129,28 @@ using namespace cv;
     float red = avgPixelIntensity.val[2];
     
     if ((blue < COLOR_THRESHOLD && green < COLOR_THRESHOLD) || (green < COLOR_THRESHOLD && red < COLOR_THRESHOLD) || (blue < COLOR_THRESHOLD && red < COLOR_THRESHOLD)) {
-        [self.averageRed addObject:[NSNumber numberWithFloat:red]];
-        [self.averageGreen addObject:[NSNumber numberWithFloat:green]];
-        [self.averageBlue addObject:[NSNumber numberWithFloat:blue]];
-        if ([self.averageRed count] >= 100) {
-            NSLog(@"Red, green, and blue average value arrays full");
+        if ([self.averageRed count] == 1) {
+            NSLog(@"Starting count.");
+        }
+        self.count++;
+        if (self.count >= 50) {
+            [self.averageRed addObject:[NSNumber numberWithFloat:red]];
+            [self.averageGreen addObject:[NSNumber numberWithFloat:green]];
+            [self.averageBlue addObject:[NSNumber numberWithFloat:blue]];
+        }
+        if ([self.averageRed count] >= 300) {
+            NSLog(@"%@", self.averageRed);
             [self.averageRed removeAllObjects];
             [self.averageGreen removeAllObjects];
             [self.averageBlue removeAllObjects];
+            self.count = 0;
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             self.torchButton.enabled = NO;
             self.switchCameraButton.enabled = NO;
         });
     } else {
+        self.count = 0;
         [self.averageRed removeAllObjects];
         [self.averageGreen removeAllObjects];
         [self.averageBlue removeAllObjects];
