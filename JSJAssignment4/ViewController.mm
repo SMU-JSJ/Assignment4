@@ -15,6 +15,7 @@
 using namespace cv;
 
 #define COLOR_THRESHOLD 30
+#define MOVING_AVERAGE_WINDOW_SIZE 5
 
 @interface ViewController () <CvVideoCameraDelegate>
 
@@ -26,8 +27,6 @@ using namespace cv;
 @property (nonatomic) BOOL torchIsOn;
 
 @property (strong, nonatomic) NSMutableArray *averageRed;
-@property (strong, nonatomic) NSMutableArray *averageGreen;
-@property (strong, nonatomic) NSMutableArray *averageBlue;
 
 @property (nonatomic) int count;
 
@@ -40,20 +39,6 @@ using namespace cv;
         _averageRed = [[NSMutableArray alloc] init];
     }
     return _averageRed;
-}
-
-- (NSMutableArray*)averageGreen {
-    if (!_averageGreen) {
-        _averageGreen = [[NSMutableArray alloc] init];
-    }
-    return _averageGreen;
-}
-
-- (NSMutableArray*)averageBlue {
-    if (!_averageBlue) {
-        _averageBlue = [[NSMutableArray alloc] init];
-    }
-    return _averageBlue;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -86,43 +71,9 @@ using namespace cv;
     Mat image_copy;
     Mat grayFrame, output;
     
-    //============================================
-    // color inverter
-    //    cvtColor(image, image_copy, CV_BGRA2BGR); // get rid of alpha for processing
-    //
-    //    // invert image
-    //    bitwise_not(image_copy, image_copy);
-    //    // copy back for further processing
-    //    cvtColor(image_copy, image, CV_BGR2BGRA); //add back for display
-    
-    //============================================
-    //access pixels
-    //    static uint counter = 0;
-    //    cvtColor(image, image_copy, CV_BGRA2BGR);
-    //    for(int i=0;i<counter;i++){
-    //        for(int j=0;j<counter;j++){
-    //            uchar *pt = image_copy.ptr(i, j);
-    //            pt[0] = 255;
-    //            pt[1] = 0;
-    //            pt[2] = 255;
-    //
-    //            pt[3] = 255;
-    //            pt[4] = 0;
-    //            pt[5] = 0;
-    //        }
-    //    }
-    //    cvtColor(image_copy, image, CV_BGR2BGRA);
-    //
-    //    counter++;
-    //    counter = counter>200 ? 0 : counter;
-    
-    //============================================
     // get average pixel intensity
     cvtColor(image, image_copy, CV_BGRA2BGR); // get rid of alpha for processing
     Scalar avgPixelIntensity = cv::mean( image_copy );
-    char text[50];
-    sprintf(text,"Avg. B: %.1f, G: %.1f, R: %.1f", avgPixelIntensity.val[0],avgPixelIntensity.val[1],avgPixelIntensity.val[2]);
-    cv::putText(image, text, cv::Point(10, 20), FONT_HERSHEY_PLAIN, 1, Scalar::all(255), 1,2);
     
     float blue = avgPixelIntensity.val[0];
     float green = avgPixelIntensity.val[1];
@@ -135,14 +86,16 @@ using namespace cv;
         self.count++;
         if (self.count >= 50) {
             [self.averageRed addObject:[NSNumber numberWithFloat:red]];
-            [self.averageGreen addObject:[NSNumber numberWithFloat:green]];
-            [self.averageBlue addObject:[NSNumber numberWithFloat:blue]];
         }
         if ([self.averageRed count] >= 300) {
-            NSLog(@"%@", self.averageRed);
+            NSLog(@"original %@", self.averageRed);
+            [self performMovingAverageCalculation];
+            NSLog(@"first %@", self.averageRed);
+            [self performMovingAverageCalculation];
+            NSLog(@"second %@", self.averageRed);
+            [self performMovingAverageCalculation];
+            NSLog(@"third %@", self.averageRed);
             [self.averageRed removeAllObjects];
-            [self.averageGreen removeAllObjects];
-            [self.averageBlue removeAllObjects];
             self.count = 0;
         }
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -152,8 +105,6 @@ using namespace cv;
     } else {
         self.count = 0;
         [self.averageRed removeAllObjects];
-        [self.averageGreen removeAllObjects];
-        [self.averageBlue removeAllObjects];
         dispatch_async(dispatch_get_main_queue(), ^{
             if (self.videoCamera.defaultAVCaptureDevicePosition != AVCaptureDevicePositionFront) {
                 self.torchButton.enabled = YES;
@@ -161,32 +112,10 @@ using namespace cv;
             self.switchCameraButton.enabled = YES;
         });
     }
-    
-    
-    //============================================
-    // change the hue inside an image
-    
-    //convert to HSV
-    //    cvtColor(image, image_copy, CV_BGRA2BGR);
-    //    cvtColor(image_copy, image_copy, CV_BGR2HSV);
-    //
-    //    //grab  just the Hue chanel
-    //    vector<Mat> layers;
-    //    cv::split(image_copy,layers);
-    //
-    //    // shift the colors
-    //    cv::add(layers[0],80.0,layers[0]);
-    //
-    //    // get back image from separated layers
-    //    cv::merge(layers,image_copy);
-    //
-    //    cvtColor(image_copy, image_copy, CV_HSV2BGR);
-    //    cvtColor(image_copy, image, CV_BGR2BGRA);
 }
 #endif
 
 - (IBAction)toggleTorch:(id)sender {
-    // you will need to fix the problem of video stopping when the torch is applied in this method
     self.torchIsOn = !self.torchIsOn;
     [self setTorchOn:self.torchIsOn];
 }
@@ -217,5 +146,26 @@ using namespace cv;
     [self.videoCamera start];
 }
 
+- (void)performMovingAverageCalculation {
+    NSMutableArray *tempAverageRed = [[NSMutableArray alloc] init];
+    
+    int half_window = MOVING_AVERAGE_WINDOW_SIZE/2;
+    
+    for (int i = 0; i < [self.averageRed count]; i++) {
+        double sum = 0;
+        int count = 0;
+        
+        for (int j = i - half_window; j <= i + half_window; j++) {
+            if (j >= 0 && j < [self.averageRed count]) {
+                sum += [self.averageRed[j] doubleValue];
+                count++;
+            }
+        }
+        
+        tempAverageRed[i] = [NSNumber numberWithDouble:sum/count];
+    }
+    
+    self.averageRed = tempAverageRed;
+}
 
 @end
