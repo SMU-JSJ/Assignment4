@@ -10,6 +10,12 @@
 
 @interface ViewController : UIViewController
 
+typedef enum heartMonitorState {
+    WAITING,
+    CALIBRATING,
+    MEASURING,
+    DISPLAYING
+} HeartMonitorState;
 
 @end
 

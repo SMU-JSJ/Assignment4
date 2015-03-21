@@ -14,16 +14,19 @@
 #import "CvVideoCameraMod.h"
 using namespace cv;
 
-#define COLOR_THRESHOLD 50
+#define COLOR_THRESHOLD 80
 #define MOVING_AVERAGE_WINDOW_SIZE 5
 #define PEAK_WINDOW_SIZE 3
 #define HEART_RATE_SENSING_SECONDS 10
+#define TORCH_ON_THRESHOLD 30
+#define TORCH_OFF_THRESHOLD 90
 
 @interface ViewController () <CvVideoCameraDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *heartLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UIButton *torchButton;
-@property (weak, nonatomic) IBOutlet UIButton *switchCameraButton;
+@property (weak, nonatomic) IBOutlet UIView *progress;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressHeightConstraint;
 
 @property (strong, nonatomic) CvVideoCameraMod *videoCamera;
 @property (nonatomic) BOOL torchIsOn;
@@ -31,16 +34,56 @@ using namespace cv;
 @property (strong, nonatomic) NSMutableArray *averageRed;
 
 @property (nonatomic) int count;
+@property (nonatomic) int torchOffCount;
+@property (nonatomic) int heartRate;
+@property (nonatomic) HeartMonitorState state;
+@property (nonatomic) CGFloat progressValue;
 
 @end
 
 @implementation ViewController
+
+@synthesize state = _state;
 
 - (NSMutableArray*)averageRed {
     if (!_averageRed) {
         _averageRed = [[NSMutableArray alloc] init];
     }
     return _averageRed;
+}
+
+- (void)setState:(HeartMonitorState)state {
+    // Paused
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.heartLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:24];
+        if (state == CALIBRATING) {
+            self.heartLabel.text = @"Calibrating...";
+        } else if (state == MEASURING) {
+            self.heartLabel.text = @"Hold still!";
+        } else if (state == DISPLAYING) {
+            self.heartLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:36];
+            self.heartLabel.text = [NSString stringWithFormat:@"%u BPM", self.heartRate];
+        } else if (state == WAITING) {
+            self.heartLabel.text = @"Place finger on camera.";
+        }
+    });
+    
+    _state = state;
+}
+
+- (void)setProgressValue:(CGFloat)progressValue {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.view removeConstraint:self.progressHeightConstraint];
+        self.progressHeightConstraint = [NSLayoutConstraint constraintWithItem:self.progress
+                                                                     attribute:NSLayoutAttributeHeight
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:self.view
+                                                                     attribute:NSLayoutAttributeHeight
+                                                                    multiplier:progressValue
+                                                                      constant:0];
+        
+        [self.view addConstraint:self.progressHeightConstraint];
+    });
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -60,6 +103,14 @@ using namespace cv;
     
     self.torchIsOn = NO;
     
+//    self.state = WAITING;
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.progressValue = 0;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -82,39 +133,60 @@ using namespace cv;
     float red = avgPixelIntensity.val[2];
     
     if ((blue < COLOR_THRESHOLD && green < COLOR_THRESHOLD) || (green < COLOR_THRESHOLD && red < COLOR_THRESHOLD) || (blue < COLOR_THRESHOLD && red < COLOR_THRESHOLD)) {
-        if ([self.averageRed count] == 1) {
-            NSLog(@"Starting count.");
-        }
         self.count++;
+        
         if (self.count >= 50) {
+            self.state = MEASURING;
             [self.averageRed addObject:[NSNumber numberWithFloat:red]];
+            self.progressValue = (CGFloat)[self.averageRed count] / (HEART_RATE_SENSING_SECONDS * 30);
+        } else if (self.count >= TORCH_ON_THRESHOLD) {
+            // Turn torch on
+            self.torchIsOn = YES;
+            [self setTorchOn:self.torchIsOn];
+            
+            if (self.state == WAITING || self.state == DISPLAYING) {
+                self.state = CALIBRATING;
+            }
         }
+        
         if ([self.averageRed count] >= HEART_RATE_SENSING_SECONDS * 30) {
-            NSLog(@"original %@", self.averageRed);
+            // Turn torch off
+            self.torchIsOn = NO;
+            [self setTorchOn:self.torchIsOn];
+            
+            // Smooth curve
             [self performMovingAverageCalculation];
-            NSLog(@"first %@", self.averageRed);
             [self performMovingAverageCalculation];
-            NSLog(@"second %@", self.averageRed);
             [self performMovingAverageCalculation];
-            NSLog(@"third %@", self.averageRed);
+            
+            // Get the number of peaks
             int numPeaks = (int)[[self findPeaks:100] count];
-            NSLog(@"%u", [self calculateHeartRate:numPeaks seconds:HEART_RATE_SENSING_SECONDS]);
+            
+            // Output final heart rate
+            self.heartRate = [self calculateHeartRate:numPeaks seconds:HEART_RATE_SENSING_SECONDS];
+            self.state = DISPLAYING;
+            NSLog(@"State after calculation = %u", self.state);
+            
+            // Reset values
             [self.averageRed removeAllObjects];
             self.count = 0;
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.torchButton.enabled = NO;
-            self.switchCameraButton.enabled = NO;
-        });
     } else {
+        self.torchOffCount++;
+        if(self.torchOffCount >= TORCH_OFF_THRESHOLD) {
+            // Turn torch off
+            self.torchIsOn = NO;
+            [self setTorchOn:self.torchIsOn];
+            self.torchOffCount = 0;
+            
+            if (self.state != DISPLAYING) {
+                NSLog(@"State = %u", self.state);
+                self.state = WAITING;
+            }
+        }
+        self.progressValue = 0;
         self.count = 0;
         [self.averageRed removeAllObjects];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.videoCamera.defaultAVCaptureDevicePosition != AVCaptureDevicePositionFront) {
-                self.torchButton.enabled = YES;
-            }
-            self.switchCameraButton.enabled = YES;
-        });
     }
 }
 #endif
@@ -133,21 +205,6 @@ using namespace cv;
         [device setTorchMode: onOff ? AVCaptureTorchModeOn : AVCaptureTorchModeOff];
         [device unlockForConfiguration];
     }
-}
-
-- (IBAction)switchCamera:(UIButton *)sender {
-    if (self.videoCamera.defaultAVCaptureDevicePosition == AVCaptureDevicePositionFront) {
-        self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionBack;
-        self.torchButton.enabled = YES;
-    } else {
-        self.videoCamera.defaultAVCaptureDevicePosition = AVCaptureDevicePositionFront;
-        self.torchButton.enabled = NO;
-        self.torchIsOn = NO;
-        [self setTorchOn:self.torchIsOn];
-    }
-    
-    [self.videoCamera stop];
-    [self.videoCamera start];
 }
 
 - (void)performMovingAverageCalculation {

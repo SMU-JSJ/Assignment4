@@ -2,7 +2,9 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="iao-de-ssr">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Assignment 3-->
@@ -38,7 +40,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dhX-pG-X1v" id="lMo-Wm-iPZ">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Module B - Measure Heart Rate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GfF-Yf-3ye">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Module B - Heart Rate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GfF-Yf-3ye">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -64,7 +66,7 @@
             </objects>
             <point key="canvasLocation" x="298" y="372"/>
         </scene>
-        <!--Face View Controller-->
+        <!--Funny Faces-->
         <scene sceneID="Q1C-J0-mZp">
             <objects>
                 <viewController id="0Xp-FW-3C5" customClass="FaceViewController" customModule="JSJAssignment4" customModuleProvider="target" sceneMemberID="viewController">
@@ -92,13 +94,13 @@
                             <constraint firstAttribute="bottom" secondItem="eKH-Nd-q4G" secondAttribute="bottom" constant="20" symbolic="YES" id="jT0-kd-ci7"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="PHM-YS-r4V"/>
+                    <navigationItem key="navigationItem" title="Funny Faces" id="PHM-YS-r4V"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qox-un-XjS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="739" y="44"/>
         </scene>
-        <!--View Controller-->
+        <!--Heart Rate-->
         <scene sceneID="FZ0-r6-Mmq">
             <objects>
                 <viewController id="6Ql-bh-uwh" customClass="ViewController" sceneMemberID="viewController">
@@ -113,42 +115,49 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LCu-h2-bW9">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iy4-Y8-cHG">
-                                <rect key="frame" x="16" y="518" width="87" height="30"/>
-                                <state key="normal" title="Toggle Torch">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="toggleTorch:" destination="6Ql-bh-uwh" eventType="touchUpInside" id="Evb-jN-nyW"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q4n-hU-qIk">
-                                <rect key="frame" x="199" y="518" width="105" height="30"/>
-                                <state key="normal" title="Switch Camera">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="switchCamera:" destination="6Ql-bh-uwh" eventType="touchUpInside" id="1Nz-b0-a2K"/>
-                                </connections>
-                            </button>
+                            <view opaque="NO" alpha="0.24999999999999967" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vuC-3i-l7d">
+                                <rect key="frame" x="0.0" y="511" width="320" height="57"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white_heart" translatesAutoresizingMaskIntoConstraints="NO" id="Vd9-HR-IxW">
+                                <rect key="frame" x="44" y="184" width="232" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="9DZ-pg-x1o"/>
+                                    <constraint firstAttribute="width" constant="232" id="Z9P-R0-DOt"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place finger on camera." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ahw-2d-nVn">
+                                <rect key="frame" x="82" y="235" width="156" height="58"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="156" id="8WV-87-bus"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="Iy4-Y8-cHG" secondAttribute="bottom" constant="20" symbolic="YES" id="FdL-J3-KpZ"/>
+                            <constraint firstItem="vuC-3i-l7d" firstAttribute="leading" secondItem="pkL-I8-PNd" secondAttribute="leadingMargin" constant="-16" id="EuX-D5-Lnx"/>
+                            <constraint firstAttribute="centerY" secondItem="Vd9-HR-IxW" secondAttribute="centerY" id="FPT-An-wzQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vuC-3i-l7d" secondAttribute="trailing" constant="-16" id="LJq-xo-WbX"/>
                             <constraint firstItem="LCu-h2-bW9" firstAttribute="bottom" secondItem="TzY-z8-yaS" secondAttribute="top" id="MqG-bG-f1k"/>
-                            <constraint firstItem="q4n-hU-qIk" firstAttribute="trailing" secondItem="pkL-I8-PNd" secondAttribute="trailingMargin" id="OzM-vQ-25l"/>
+                            <constraint firstAttribute="centerX" secondItem="Vd9-HR-IxW" secondAttribute="centerX" id="NNP-PD-CNl"/>
+                            <constraint firstItem="vuC-3i-l7d" firstAttribute="height" secondItem="pkL-I8-PNd" secondAttribute="height" multiplier="0.1" id="OOW-I7-dFx"/>
                             <constraint firstItem="LCu-h2-bW9" firstAttribute="leading" secondItem="pkL-I8-PNd" secondAttribute="leading" id="T4R-qD-91a"/>
-                            <constraint firstItem="Iy4-Y8-cHG" firstAttribute="leading" secondItem="pkL-I8-PNd" secondAttribute="leadingMargin" id="Wc0-Sa-Qlb"/>
-                            <constraint firstItem="q4n-hU-qIk" firstAttribute="baseline" secondItem="Iy4-Y8-cHG" secondAttribute="baseline" id="hHe-uF-MF3"/>
+                            <constraint firstAttribute="centerX" secondItem="ahw-2d-nVn" secondAttribute="centerX" id="TaP-vy-RdT"/>
+                            <constraint firstItem="TzY-z8-yaS" firstAttribute="top" secondItem="vuC-3i-l7d" secondAttribute="bottom" id="e3T-zz-rWo"/>
+                            <constraint firstItem="Vd9-HR-IxW" firstAttribute="top" secondItem="ahw-2d-nVn" secondAttribute="centerY" constant="-80" id="l4W-OC-l5h"/>
                             <constraint firstAttribute="trailing" secondItem="LCu-h2-bW9" secondAttribute="trailing" id="m0z-PL-P9Q"/>
                             <constraint firstItem="LCu-h2-bW9" firstAttribute="top" secondItem="pkL-I8-PNd" secondAttribute="top" id="mgN-AY-OoT"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="bbP-w2-feg"/>
+                    <navigationItem key="navigationItem" title="Heart Rate" id="bbP-w2-feg"/>
                     <connections>
+                        <outlet property="heartLabel" destination="ahw-2d-nVn" id="NGb-W9-6So"/>
                         <outlet property="imageView" destination="LCu-h2-bW9" id="aSy-Wx-Fth"/>
-                        <outlet property="switchCameraButton" destination="q4n-hU-qIk" id="uMn-Uj-NwW"/>
-                        <outlet property="torchButton" destination="Iy4-Y8-cHG" id="TNw-6C-seb"/>
+                        <outlet property="progress" destination="vuC-3i-l7d" id="Nfa-cI-tBB"/>
+                        <outlet property="progressHeightConstraint" destination="OOW-I7-dFx" id="jJR-lh-Kdw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PoF-sD-Xh4" sceneMemberID="firstResponder"/>
@@ -174,6 +183,9 @@
             <point key="canvasLocation" x="-234" y="372"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="white_heart" width="1260" height="1088"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
