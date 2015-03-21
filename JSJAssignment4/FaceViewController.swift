@@ -16,21 +16,34 @@ class FaceViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
         // Do any additional setup after loading the view, typically from a nib.
+        self.setupCameraAndFilters()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        self.videoManager.stop()
+    }
+
+    func setupCameraAndFilters() {
         self.view.backgroundColor = nil
         
-        self.videoManager = VideoAnalgesic.sharedInstance
-        self.videoManager.setCameraPosition(AVCaptureDevicePosition.Front)
-        
-        let optsDetector = [CIDetectorAccuracy:CIDetectorAccuracyLow]
-        
-        let detector = CIDetector(ofType: CIDetectorTypeFace,
-            context: self.videoManager.getCIContext(),
-            options: optsDetector)
-        
-        var optsFace = [CIDetectorImageOrientation:self.videoManager.getImageOrientationFromUIOrientation(UIApplication.sharedApplication().statusBarOrientation),CIDetectorSmile:true,CIDetectorEyeBlink:true]
+        if (self.videoManager == nil) {
+            self.videoManager = VideoAnalgesic.sharedInstance
+            self.videoManager.setCameraPosition(AVCaptureDevicePosition.Front)
+        }
         
         self.videoManager.setProcessingBlock( { (imageInput) -> (CIImage) in
+            
+            let optsDetector = [CIDetectorAccuracy:CIDetectorAccuracyLow]
+            
+            let detector = CIDetector(ofType: CIDetectorTypeFace,
+                context: self.videoManager.getCIContext(),
+                options: optsDetector)
+            
+            var optsFace = [CIDetectorImageOrientation:self.videoManager.getImageOrientationFromUIOrientation(UIApplication.sharedApplication().statusBarOrientation),CIDetectorSmile:true,CIDetectorEyeBlink:true]
             
             var features = detector.featuresInImage(imageInput, options: optsFace)
             var swappedPoint = CGPoint()
@@ -103,8 +116,6 @@ class FaceViewController: UIViewController {
                     filter.setValue(outputImage, forKey: kCIInputImageKey)
                     outputImage = filter.outputImage
                 }
-                
-                
             }
             
             return outputImage
@@ -113,14 +124,9 @@ class FaceViewController: UIViewController {
         self.videoManager.start()
     }
     
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        self.videoManager.stop()
-    }
-    
     @IBAction func switchCameraClicked(sender: UIButton) {
         self.videoManager.toggleCameraPosition()
+        self.setupCameraAndFilters()
     }
     
 }
