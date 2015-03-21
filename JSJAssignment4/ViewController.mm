@@ -14,8 +14,10 @@
 #import "CvVideoCameraMod.h"
 using namespace cv;
 
-#define COLOR_THRESHOLD 30
+#define COLOR_THRESHOLD 50
 #define MOVING_AVERAGE_WINDOW_SIZE 5
+#define PEAK_WINDOW_SIZE 3
+#define HEART_RATE_SENSING_SECONDS 10
 
 @interface ViewController () <CvVideoCameraDelegate>
 
@@ -87,7 +89,7 @@ using namespace cv;
         if (self.count >= 50) {
             [self.averageRed addObject:[NSNumber numberWithFloat:red]];
         }
-        if ([self.averageRed count] >= 300) {
+        if ([self.averageRed count] >= HEART_RATE_SENSING_SECONDS * 30) {
             NSLog(@"original %@", self.averageRed);
             [self performMovingAverageCalculation];
             NSLog(@"first %@", self.averageRed);
@@ -95,6 +97,8 @@ using namespace cv;
             NSLog(@"second %@", self.averageRed);
             [self performMovingAverageCalculation];
             NSLog(@"third %@", self.averageRed);
+            int numPeaks = (int)[[self findPeaks:100] count];
+            NSLog(@"%u", [self calculateHeartRate:numPeaks seconds:HEART_RATE_SENSING_SECONDS]);
             [self.averageRed removeAllObjects];
             self.count = 0;
         }
@@ -166,6 +170,55 @@ using namespace cv;
     }
     
     self.averageRed = tempAverageRed;
+}
+
+// Find the maximum index in an array given a starting index and length of subarray
+- (int)maxIndex:(NSMutableArray*)data
+     startIndex:(int)startIndex
+         length:(int)length {
+    float max = -1;
+    int maxIndex = -1;
+    for (int i = startIndex; i < startIndex + length; i++) {
+        if ([data[i] floatValue] > max) {
+            max = [data[i] floatValue];
+            maxIndex = i;
+        }
+    }
+    return maxIndex;
+}
+
+- (NSMutableArray*)findPeaks:(int)numPeaks {
+    NSMutableArray *peaks = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [self.averageRed count] - PEAK_WINDOW_SIZE; i++) {
+        int index = [self maxIndex:self.averageRed startIndex:i length:PEAK_WINDOW_SIZE];
+        //NSLog(@"%u", index);
+        // check the index is the midpoint
+        if (index == i + (PEAK_WINDOW_SIZE - 1)/2) {
+            //NSLog(@"index is midpoint");
+            if ([peaks count] == numPeaks) {
+                [self replaceSmallestValueInArrayWithValue:peaks value:self.averageRed[index]];
+            } else {
+                [peaks addObject:self.averageRed[index]];
+            }
+        }
+    }
+    return peaks;
+}
+
+- (void)replaceSmallestValueInArrayWithValue:(NSMutableArray*)array
+                                       value:(NSNumber*)value {
+    for (int i = 0; i < [array count]; i++) {
+        if (array[i] < value) {
+            NSNumber *tempValue = array[i];
+            array[i] = value;
+            value = tempValue;
+        }
+    }
+}
+
+- (int)calculateHeartRate:(int)heartBeats
+                  seconds:(int)seconds {
+    return heartBeats * 60 / seconds;
 }
 
 @end

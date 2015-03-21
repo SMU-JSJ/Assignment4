@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		684563971ABCECE800404173 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 684563961ABCECE800404173 /* opencv2.framework */; };
 		EFE6731B1AA9382700010DAD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE6731A1AA9382700010DAD /* main.m */; };
 		EFE6731E1AA9382700010DAD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE6731D1AA9382700010DAD /* AppDelegate.m */; };
 		EFE673211AA9382700010DAD /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = EFE673201AA9382700010DAD /* ViewController.mm */; };
@@ -22,7 +23,6 @@
 		EFE673491AA938F200010DAD /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE673481AA938F200010DAD /* AssetsLibrary.framework */; };
 		EFE6734B1AA938FB00010DAD /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE6734A1AA938FB00010DAD /* Accelerate.framework */; };
 		EFE6734D1AA9390300010DAD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE6734C1AA9390300010DAD /* AVFoundation.framework */; };
-		EFE6734F1AA9392600010DAD /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE6734E1AA9392600010DAD /* opencv2.framework */; };
 		EFE673511AA9395300010DAD /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE673501AA9395300010DAD /* CoreImage.framework */; };
 		EFE673541AA9399F00010DAD /* CvVideoCameraMod.m in Sources */ = {isa = PBXBuildFile; fileRef = EFE673531AA9399F00010DAD /* CvVideoCameraMod.m */; };
 		EFE6735A1AA93D9B00010DAD /* FaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE673591AA93D9B00010DAD /* FaceViewController.swift */; };
@@ -40,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		684563961ABCECE800404173 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../SMUOpenCV/OpenCv/opencv2.framework; sourceTree = "<group>"; };
 		EFE673151AA9382700010DAD /* JSJAssignment4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSJAssignment4.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFE673191AA9382700010DAD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFE6731A1AA9382700010DAD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -61,7 +62,6 @@
 		EFE673481AA938F200010DAD /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		EFE6734A1AA938FB00010DAD /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		EFE6734C1AA9390300010DAD /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		EFE6734E1AA9392600010DAD /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../Downloads/opencv2.framework; sourceTree = "<group>"; };
 		EFE673501AA9395300010DAD /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		EFE673521AA9399A00010DAD /* CvVideoCameraMod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CvVideoCameraMod.h; sourceTree = "<group>"; };
 		EFE673531AA9399F00010DAD /* CvVideoCameraMod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CvVideoCameraMod.m; sourceTree = "<group>"; };
@@ -76,7 +76,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFE673511AA9395300010DAD /* CoreImage.framework in Frameworks */,
-				EFE6734F1AA9392600010DAD /* opencv2.framework in Frameworks */,
 				EFE6734D1AA9390300010DAD /* AVFoundation.framework in Frameworks */,
 				EFE6734B1AA938FB00010DAD /* Accelerate.framework in Frameworks */,
 				EFE673491AA938F200010DAD /* AssetsLibrary.framework in Frameworks */,
@@ -84,6 +83,7 @@
 				EFE673451AA938DD00010DAD /* CoreAudio.framework in Frameworks */,
 				EFE673431AA9387500010DAD /* CoreVideo.framework in Frameworks */,
 				EFE673411AA9386B00010DAD /* QuartzCore.framework in Frameworks */,
+				684563971ABCECE800404173 /* opencv2.framework in Frameworks */,
 				EFE6733F1AA9386000010DAD /* CoreMedia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,7 +102,6 @@
 			isa = PBXGroup;
 			children = (
 				EFE673501AA9395300010DAD /* CoreImage.framework */,
-				EFE6734E1AA9392600010DAD /* opencv2.framework */,
 				EFE6734C1AA9390300010DAD /* AVFoundation.framework */,
 				EFE6734A1AA938FB00010DAD /* Accelerate.framework */,
 				EFE673481AA938F200010DAD /* AssetsLibrary.framework */,
@@ -114,6 +113,7 @@
 				EFE673171AA9382700010DAD /* JSJAssignment4 */,
 				EFE673311AA9382700010DAD /* JSJAssignment4Tests */,
 				EFE673161AA9382700010DAD /* Products */,
+				684563961ABCECE800404173 /* opencv2.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -403,6 +403,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/chc484-mac/Downloads",
+					/Users/jessicayeh/Documents/iOS/SMUOpenCV/OpenCv,
 				);
 				INFOPLIST_FILE = JSJAssignment4/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -420,6 +421,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/chc484-mac/Downloads",
+					/Users/jessicayeh/Documents/iOS/SMUOpenCV/OpenCv,
 				);
 				INFOPLIST_FILE = JSJAssignment4/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -481,6 +483,7 @@
 				EFE6733A1AA9382700010DAD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EFE6733B1AA9382700010DAD /* Build configuration list for PBXNativeTarget "JSJAssignment4Tests" */ = {
 			isa = XCConfigurationList;
@@ -489,6 +492,7 @@
 				EFE6733D1AA9382700010DAD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
