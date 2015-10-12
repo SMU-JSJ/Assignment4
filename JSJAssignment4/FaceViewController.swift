@@ -47,16 +47,16 @@ class FaceViewController: UIViewController {
                 context: self.videoManager.getCIContext(),
                 options: optsDetector)
             
-            var optsFace = [CIDetectorImageOrientation:self.videoManager.getImageOrientationFromUIOrientation(UIApplication.sharedApplication().statusBarOrientation),CIDetectorSmile:true,CIDetectorEyeBlink:true]
+            let optsFace = [CIDetectorImageOrientation:self.videoManager.getImageOrientationFromUIOrientation(UIApplication.sharedApplication().statusBarOrientation),CIDetectorSmile:true,CIDetectorEyeBlink:true]
             
-            var features = detector.featuresInImage(imageInput, options: optsFace)
+            let features = detector.featuresInImage(imageInput, options: optsFace as? [String: AnyObject])
             var swappedPoint = CGPoint()
             
             var outputImage = imageInput
-            var filter: CIFilter
+            var filter: CIFilter!
             
             // Iterate through all the faces detected and put filters
-            for f in features as [CIFaceFeature]{
+            for f in features as! [CIFaceFeature]{
                 let faceRatio = f.bounds.size.height/15
                 
                 swappedPoint.x = f.bounds.midX
@@ -79,7 +79,7 @@ class FaceViewController: UIViewController {
                     filter.setValue(CIVector(CGPoint: f.leftEyePosition), forKey: "inputCenter")
                     filter.setValue(outputImage, forKey: kCIInputImageKey)
                     
-                    outputImage = filter.outputImage
+                    outputImage = filter.outputImage!
                 }
                 
                 // If the face has a right eye
@@ -99,7 +99,7 @@ class FaceViewController: UIViewController {
                     filter.setValue(CIVector(CGPoint: f.rightEyePosition), forKey: "inputCenter")
                     filter.setValue(outputImage, forKey: kCIInputImageKey)
                     
-                    outputImage = filter.outputImage
+                    outputImage = filter.outputImage!
                 }
                 
                 // If the face has a mouth position
@@ -121,7 +121,7 @@ class FaceViewController: UIViewController {
                     // Apply the vortex filter
                     filter.setValue(outputImage, forKey: kCIInputImageKey)
                     
-                    outputImage = filter.outputImage
+                    outputImage = filter.outputImage!
                 }
                 
                 // Create and place bump distortion for face
@@ -130,7 +130,7 @@ class FaceViewController: UIViewController {
                 filter.setValue(0.75, forKey: "inputScale")
                 filter.setValue(CIVector(CGPoint: swappedPoint), forKey: "inputCenter")
                 filter.setValue(outputImage, forKey: kCIInputImageKey)
-                outputImage = filter.outputImage
+                outputImage = filter.outputImage!
             }
             
             return outputImage

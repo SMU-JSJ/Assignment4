@@ -196,7 +196,7 @@ class VideoAnalgesic: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, AV
             object:nil)
         
         dispatch_async(captureSessionQueue){
-            var error:NSError? = nil;
+            let error:NSError? = nil;
             
             // get the input device and also validate the settings
             let videoDevices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
@@ -212,7 +212,9 @@ class VideoAnalgesic: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, AV
             }
             
             // obtain device input
-            let videoDeviceInput: AVCaptureDeviceInput = AVCaptureDeviceInput.deviceInputWithDevice(self.videoDevice, error:&error) as AVCaptureDeviceInput
+            let videoDeviceInput: AVCaptureDeviceInput = (try! AVCaptureDeviceInput(device: self.videoDevice))
+            
+            
             
             if (error != nil)
             {
@@ -343,8 +345,8 @@ class VideoAnalgesic: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, AV
     // video buffer delegate
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
         
-        var imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
-        var sourceImage = CIImage(CVPixelBuffer: imageBuffer as CVPixelBufferRef, options:nil)
+        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
+        let sourceImage = CIImage(CVPixelBuffer: imageBuffer as CVPixelBufferRef, options:nil)
         
         // run through a filter
         var filteredImage:CIImage! = nil;
@@ -353,7 +355,7 @@ class VideoAnalgesic: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, AV
             filteredImage=self.processBlock!(imageInput: sourceImage)
         }
         
-        let sourceExtent:CGRect = sourceImage.extent()
+        let sourceExtent:CGRect = sourceImage.extent
         
         let sourceAspect = sourceExtent.size.width / sourceExtent.size.height;
         let previewAspect = self.videoPreviewViewBounds.size.width  / self.videoPreviewViewBounds.size.height;
